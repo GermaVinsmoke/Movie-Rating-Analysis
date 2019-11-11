@@ -21,11 +21,12 @@ def rottenTomatoScrap(movieName):
         #print('Status Code: ', page.status_code)
         soup = bs.BeautifulSoup(page.text, 'lxml')
 
-        for link in soup.find("div", id="scorePanel").find_all("span"):
+        for link in soup.find_all("span", class_="mop-ratings-wrap__percentage"):
+            rating_text = link.text.strip()
             pattern = "^[0-9]{1,2}%$"
-            if re.match(pattern, link.text):
+            if re.match(pattern, rating_text):
                 # print(link.text)
-                rottenDataList.append(link.text)
+                rottenDataList.append(rating_text)
         print('Rotten Data List: ', rottenDataList)
         return code
     else:
